@@ -36,7 +36,6 @@ jobs:
             --create-namespace \
             --set replicaCount=2
 
-      # Fixed Step 6: Using the correct Bitnami repository index URL
       - name: Deploy Application 2 - Python Application
         run: |
           helm repo add bitnami https://bitnami.com
