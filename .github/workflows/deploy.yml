@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -21,7 +22,9 @@ jobs:
 
       - name: Update Kubeconfig for EKS
         run: |
-          aws eks update-kubeconfig --name kubernets-practice --region ${{ secrets.AWS_REGION }}
+          aws eks update-kubeconfig \
+            --name kubernets-practice \
+            --region ${{ secrets.AWS_REGION }}
 
       - name: Set up Helm
         uses: azure/setup-helm@v4
@@ -36,11 +39,11 @@ jobs:
             --create-namespace \
             --set replicaCount=2
 
-      - name: Deploy Application 2 - Python Application
+      - name: Deploy Application 2 - Redis
         run: |
-          helm repo add bitnami https://bitnami.com
+          helm repo add bitnami https://charts.bitnami.com/bitnami
           helm repo update
-          helm upgrade --install python-release bitnami/python \
+          helm upgrade --install redis-release bitnami/redis \
             --namespace production-apps \
             --create-namespace \
-            --set replicaCount=1
+            --set replica.replicaCount=1
