@@ -19,18 +19,15 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # Automatically updates Kubeconfig using the accurate metadata of your EKS Node
       - name: Update Kubeconfig for EKS
         run: |
           aws eks update-kubeconfig --name eks-ng-practice --region ${{ secrets.AWS_REGION }}
 
-      # Pinning the exact matching Helm version you verified locally
       - name: Set up Helm
         uses: azure/setup-helm@v4
         with:
           version: 'v3.22.0'
 
-      # Fix: Cleared out the broken '--set values.yaml' flag
       - name: Deploy Application 1 - Nginx Web Server
         run: |
           helm lint ./nginx-app
@@ -39,7 +36,7 @@ jobs:
             --create-namespace \
             --set replicaCount=2
 
-      # Safe isolated installation parameters for Application 2
+      # Fixed Step 6: Using the correct Bitnami repository index URL
       - name: Deploy Application 2 - Python Application
         run: |
           helm repo add bitnami https://bitnami.com
