@@ -21,7 +21,7 @@ jobs:
 
       - name: Update Kubeconfig for EKS
         run: |
-          aws eks update-kubeconfig --name eks-ng-practice --region ${{ secrets.AWS_REGION }}
+          aws eks update-kubeconfig --name kubernets-practice --region ${{ secrets.AWS_REGION }}
 
       - name: Set up Helm
         uses: azure/setup-helm@v4
